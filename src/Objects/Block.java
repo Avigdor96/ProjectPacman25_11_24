@@ -7,7 +7,7 @@ public class Block extends GeneralElement{
 
     public Block(int x, int y) {
         setPoint(x, y);
-        image = new ImageIcon("src/Pictures/Block2.jpeg");
+        image = new ImageIcon("Pictures/Block2.jpeg");
     }
 
     @Override

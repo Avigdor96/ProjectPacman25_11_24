@@ -8,7 +8,7 @@ public class Fruit extends GeneralElement implements Eatable{
 
     public Fruit(int x, int y) {
         setPoint(x, y);
-        image = new ImageIcon("src/Pictures/Fruit.jpg");
+        image = new ImageIcon("Pictures/Fruit.jpg");
     }
 
     @Override

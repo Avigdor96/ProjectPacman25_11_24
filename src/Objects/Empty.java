@@ -7,7 +7,7 @@ public class Empty extends GeneralElement{
 
     public Empty(int x, int y) {
         setPoint(x, y);
-        image = new ImageIcon("src/Pictures/SquareWhite.jpg");
+        image = new ImageIcon("Pictures/SquareWhite.jpg");
     }
 
     @Override

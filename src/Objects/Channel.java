@@ -9,7 +9,7 @@ public class Channel extends GeneralElement{
 
     public Channel(int x, int y) {
         setPoint(x, y);
-        image = new ImageIcon("src/Pictures/SquareWhite.jpg");
+        image = new ImageIcon("Pictures/SquareWhite.jpg");
     }
 
     @Override

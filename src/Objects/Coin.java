@@ -9,7 +9,7 @@ public class Coin extends GeneralElement implements Eatable{
 
     public Coin(int x, int y) {
         setPoint(x, y);
-        image = new ImageIcon("src/Pictures/Coin.jpg");
+        image = new ImageIcon("Pictures/Coin.jpg");
     }
 
     public void setValue(int value) {

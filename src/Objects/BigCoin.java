@@ -7,7 +7,7 @@ public class BigCoin extends Coin{
 
     public BigCoin(int x, int y) {
         super(x, y);
-        image = new ImageIcon("src/Pictures/gifmaker_me.gif");
+        image = new ImageIcon("Pictures/gifmaker_me.gif");
         value = 30;
     }
 
