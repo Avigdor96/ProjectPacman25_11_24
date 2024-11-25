@@ -23,23 +23,33 @@ public class Pacman extends GeneralElement implements Moveable {
 
     public Pacman(int size) {
         setPoint(13 * size, 21 * size);
-        image = new ImageIcon("src/Pictures/PacmanLeftOpen.jpg");
+        image = new ImageIcon("Pictures/PacmanLeftOpen.jpg");
         lives = 3;
     }
 
-    public void leftManager(GeneralElement[][] myMap){
+    public int eat(int x, int y, GeneralElement[][] map) {
+        if (map[y][x] instanceof Eatable) {
+            int value = ((Eatable) map[y][x]).getValue();
+            map[y][x] = new Empty(x * 25, y * 25);
+            score += value;
+            return value;
+        }
+        return 0;
+    }
+
+    public void leftManager(GeneralElement[][] myMap) {
         int tempY = this.getLocationY();
         int tempX = this.getNextLeftLoc();
         if (this.canMoveLeft(myMap)) {
             this.setPoint(this.getX() - speed, this.getY());
-            if (myMap[tempY][tempX] instanceof Eatable) {
-                int value = ((Eatable) myMap[tempY][tempX]).getValue();
-                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
-                score += value;
-                updateCoinsEaten(value);
-            }
+//            if (myMap[tempY][tempX] instanceof Eatable) {
+//                int value = ((Eatable) myMap[tempY][tempX]).getValue();
+//                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
+//                score += value;
+            updateCoinsEaten(eat(tempX, tempY, myMap));
+//            }
         } else if (myMap[tempY][tempX + 1] instanceof Channel) {
-            tempX = myMap[0].length -1;
+            tempX = myMap[0].length - 1;
             this.setPoint(tempX * 25, this.getY());
         }
 
@@ -50,34 +60,36 @@ public class Pacman extends GeneralElement implements Moveable {
         int tempX = this.getNextRightLoc();
         if (this.canMoveRight(myMap)) {
             this.setPoint(this.getX() + speed, this.getY());
-            if (myMap[tempY][tempX] instanceof Eatable) {
-                int value = ((Eatable) myMap[tempY][tempX]).getValue();
-                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
-                score += value;
-                updateCoinsEaten(value);
-            } else if (myMap[tempY][tempX] instanceof Channel) {
-                this.setPoint(tempX, this.getY());
-            }
+//            if (myMap[tempY][tempX] instanceof Eatable) {
+//                int value = ((Eatable) myMap[tempY][tempX]).getValue();
+//                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
+//                score += value;
+            updateCoinsEaten(eat(tempX, tempY, myMap));
+//            }
+        } else if (myMap[tempY][tempX] instanceof Channel) {
+            setPoint(myMap[0].length, getY());
+            setPoint(0, getY());
         }
     }
 
-    public void lifeManager(GeneralElement[][] map, int x, int y){
-        if (map[y][x] instanceof Ghost){
-            lives --;
+    public void lifeManager(GeneralElement[][] map, int x, int y) {
+        if (map[y][x] instanceof Ghost) {
+            lives--;
+            System.out.println(lives);
         }
     }
 
-    public void downManager(GeneralElement[][] myMap){
+    public void downManager(GeneralElement[][] myMap) {
         int tempY = this.getNextDownLoc();
         int tempX = this.getLocationX();
         if (this.canMoveDown(myMap)) {
             this.setPoint(this.getX(), this.getY() + speed);
-            if (myMap[tempY][tempX] instanceof Eatable) {
-                int value = ((Eatable) myMap[tempY][tempX]).getValue();
-                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
-                score += value;
-                updateCoinsEaten(value);
-            }
+//            if (myMap[tempY][tempX] instanceof Eatable) {
+//                int value = ((Eatable) myMap[tempY][tempX]).getValue();
+//                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
+//                score += value;
+                updateCoinsEaten(eat(tempX, tempY, myMap));
+//            }
         }
 
     }
@@ -86,14 +98,13 @@ public class Pacman extends GeneralElement implements Moveable {
         int tempY = this.getNextUpLoc();
         int tempX = this.getLocationX();
         if (this.canMoveUp(myMap)) {
-            int i = 5;
             this.setPoint(this.getX(), this.getY() - speed);
-            if (myMap[tempY][tempX] instanceof Eatable) {
-                int value = ((Eatable) myMap[tempY][tempX]).getValue();
-                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
-                score += value;
-                updateCoinsEaten(value);
-            }
+//            if (myMap[tempY][tempX] instanceof Eatable) {
+//                int value = ((Eatable) myMap[tempY][tempX]).getValue();
+//                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
+//                score += value;
+                updateCoinsEaten(eat(tempX, tempY, myMap));
+//            }
         }
     }
 
@@ -144,10 +155,10 @@ public class Pacman extends GeneralElement implements Moveable {
         point.y = y;
         locationY = point.y / width;
         locationX = point.x / width;
-        nextUpLoc = locationY  - 1;
-        nextDownLoc = locationY  + 1;
-        nextRightLoc = locationX  + 1;
-        nextLeftLoc =  locationX  - 1;
+        nextUpLoc = locationY - 1;
+        nextDownLoc = locationY + 1;
+        nextRightLoc = locationX + 1;
+        nextLeftLoc = locationX - 1;
     }
 
 
@@ -172,23 +183,23 @@ public class Pacman extends GeneralElement implements Moveable {
     }
 
 
-    public boolean canMoveUp(GeneralElement[][] myMap){
+    public boolean canMoveUp(GeneralElement[][] myMap) {
         return !((myMap[nextUpLoc][locationX]) instanceof Block);
     }
 
     @Override
     public boolean canMoveDown(GeneralElement[][] myMap) {
-       return !(myMap[nextDownLoc][locationX] instanceof Block);
+        return !(myMap[nextDownLoc][locationX] instanceof Block);
     }
 
     @Override
     public boolean canMoveRight(GeneralElement[][] myMap) {
-       return  !(myMap[locationY][nextRightLoc] instanceof Block);
+        return !(myMap[locationY][nextRightLoc] instanceof Block) && !(myMap[locationY][nextRightLoc] instanceof Channel);
     }
 
     @Override
     public boolean canMoveLeft(GeneralElement[][] myMap) {
-        if (nextLeftLoc < 0){
+        if (nextLeftLoc < 0) {
             return false;
         }
         return !(myMap[locationY][nextLeftLoc] instanceof Block);
@@ -204,54 +215,52 @@ public class Pacman extends GeneralElement implements Moveable {
         return point.y;
     }
 
-    public void MouthControl(){
+    public void MouthControl() {
         openMouth = !openMouth;
     }
 
-    public void changeMouthLeft(){
-        if (openMouth){
-        setImage(new ImageIcon("src/Pictures/PacmanLeftClose.jpg"));
-        }
-    else{
-        setImage(new ImageIcon("src/Pictures/PacmanLeftOpen.jpg"));
-    }}
-
-    public void changeMonthRight(){
-        if (openMouth){
-            setImage(new ImageIcon("src/Pictures/PacmanRightClose.jpg"));
-        }else{
-            setImage(new ImageIcon("src/Pictures/PacmanRightOpen.jpg"));
+    public void changeMouthLeft() {
+        if (openMouth) {
+            setImage(new ImageIcon("Pictures/PacmanLeftClose.jpg"));
+        } else {
+            setImage(new ImageIcon("Pictures/PacmanLeftOpen.jpg"));
         }
     }
 
-    public void changeMonthUp(){
-        if (openMouth){
-        setImage(new ImageIcon("src/Pictures/PacmanUpClose.jpg"));
+    public void changeMonthRight() {
+        if (openMouth) {
+            setImage(new ImageIcon("Pictures/PacmanRightClose.jpg"));
+        } else {
+            setImage(new ImageIcon("Pictures/PacmanRightOpen.jpg"));
         }
-    else{
-        setImage(new ImageIcon("src/Pictures/PacmanUpOpen.jpg"));
-    }}
-
-    public void changeMonthDown(){
-        if (openMouth){
-            setImage(new ImageIcon("src/Pictures/PacmanDownClose.jpg"));
-        }else{
-            setImage(new ImageIcon("src/Pictures/PacmanDownOpen.jpg"));    }
     }
 
-    public boolean ateQuarter(){
+    public void changeMonthUp() {
+        if (openMouth) {
+            setImage(new ImageIcon("Pictures/PacmanUpClose.jpg"));
+        } else {
+            setImage(new ImageIcon("Pictures/PacmanUpOpen.jpg"));
+        }
+    }
+
+    public void changeMonthDown() {
+        if (openMouth) {
+            setImage(new ImageIcon("Pictures/PacmanDownClose.jpg"));
+        } else {
+            setImage(new ImageIcon("Pictures/PacmanDownOpen.jpg"));
+        }
+    }
+
+    public boolean ateQuarter() {
         boolean signOut = false;
-        signOut =  coinsEaten == quarterCoins;
+        signOut = coinsEaten == quarterCoins;
         if (signOut) coinsEaten = 0;
         return signOut;
     }
 
-    public void updateCoinsEaten(int value){
+    public void updateCoinsEaten(int value) {
         if (value == coinValue) coinsEaten++;
     }
-
-
-
 
 
 }

@@ -12,10 +12,10 @@ import java.util.Queue;
 
 public class GamePanel extends JPanel implements Runnable {
     final int size = 25;
-    Reddish reddish = new Reddish(14, 13, size, "src/Pictures/Redy.jpg");
-    Purplish purplish = new Purplish(15, 13, size, "src/Pictures/Purplish.jpeg");
-    Bluish bluish = new Bluish(12, 13, size, "src/Pictures/Bluish.jpg");
-    Pinky pinky = new Pinky(13, 13, size, "src/Pictures/gifmaker_me (1).gif");
+    Reddish reddish = new Reddish(14, 13, size, "Pictures/Redy.jpg");
+    Purplish purplish = new Purplish(15, 13, size, "Pictures/Purplish.jpeg");
+    Bluish bluish = new Bluish(12, 13, size, "Pictures/Bluish.jpg");
+    Pinky pinky = new Pinky(13, 13, size, "Pictures/gifmaker_me (1).gif");
     public Queue<Ghost> ghostQueueInside = new LinkedList<Ghost>();
     public ArrayList<Ghost> ghostOutSide = new ArrayList<>();
     Pacman pacman = new Pacman(size);

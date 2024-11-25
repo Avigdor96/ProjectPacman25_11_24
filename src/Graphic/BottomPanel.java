@@ -9,19 +9,17 @@ import java.util.ArrayList;
 
 public class BottomPanel extends JPanel {
     private ImageIcon heartIcon;
-    private ArrayList<JLabel> hearts;
     private Pacman pacman;
     private JLabel bottomLabel;
 
 
     public BottomPanel(Pacman pacman) {
         this.pacman = pacman;
-        heartIcon = new ImageIcon("src/Pictures/Heart.jpg");
-        for (int i = 0; i < pacman.getLives(); i++) {
-            JLabel jLabel = new JLabel(heartIcon);
-            add(jLabel);
+        heartIcon = new ImageIcon("Pictures/Heart.jpg");
+        JLabel jLabel = new JLabel(heartIcon);
+        JLabel jLabel1 = new JLabel(heartIcon);
+        JLabel jLabel2 = new JLabel(heartIcon);
         }
     }
 
 
-}
