@@ -37,6 +37,7 @@ public class Pacman extends GeneralElement implements Moveable {
         return 0;
     }
 
+
     public void leftManager(GeneralElement[][] myMap) {
         int tempY = this.getLocationY();
         int tempX = this.getNextLeftLoc();
@@ -54,6 +55,8 @@ public class Pacman extends GeneralElement implements Moveable {
         }
 
     }
+
+
 
     public void rightManager(GeneralElement[][] myMap) {
         int tempY = this.getLocationY();
@@ -80,31 +83,21 @@ public class Pacman extends GeneralElement implements Moveable {
     }
 
     public void downManager(GeneralElement[][] myMap) {
-        int tempY = this.getNextDownLoc();
-        int tempX = this.getLocationX();
-        if (this.canMoveDown(myMap)) {
-            this.setPoint(this.getX(), this.getY() + speed);
-//            if (myMap[tempY][tempX] instanceof Eatable) {
-//                int value = ((Eatable) myMap[tempY][tempX]).getValue();
-//                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
-//                score += value;
+        int tempY = getNextDownLoc();
+        int tempX = getLocationX();
+        if (canMoveDown(myMap)) {
+            this.setPoint(getX(), getY() + speed);
                 updateCoinsEaten(eat(tempX, tempY, myMap));
-//            }
         }
 
     }
 
     public void upManager(GeneralElement[][] myMap) {
-        int tempY = this.getNextUpLoc();
-        int tempX = this.getLocationX();
-        if (this.canMoveUp(myMap)) {
-            this.setPoint(this.getX(), this.getY() - speed);
-//            if (myMap[tempY][tempX] instanceof Eatable) {
-//                int value = ((Eatable) myMap[tempY][tempX]).getValue();
-//                myMap[tempY][tempX] = new Empty(tempX * 25, tempY * 25);
-//                score += value;
+        int tempY = getNextUpLoc();
+        int tempX = getLocationX();
+        if (canMoveUp(myMap)) {
+            setPoint(getX(), getY() - speed);
                 updateCoinsEaten(eat(tempX, tempY, myMap));
-//            }
         }
     }
 
@@ -250,14 +243,15 @@ public class Pacman extends GeneralElement implements Moveable {
             setImage(new ImageIcon("Pictures/PacmanDownOpen.jpg"));
         }
     }
-
+//Check if pacman ate quarter coins (Initialized every quarter)
     public boolean ateQuarter() {
-        boolean signOut = false;
-        signOut = coinsEaten == quarterCoins;
-        if (signOut) coinsEaten = 0;
-        return signOut;
+        boolean signToOut;
+        signToOut = coinsEaten == quarterCoins;
+        if (signToOut) coinsEaten = 0;
+        return signToOut;
     }
 
+//Counts how many coins pacman ate
     public void updateCoinsEaten(int value) {
         if (value == coinValue) coinsEaten++;
     }
